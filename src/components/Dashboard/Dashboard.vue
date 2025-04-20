@@ -1,9 +1,9 @@
 <template>
-  <div class="dashboard">
+  <div class="dashboard" v-if="!selectedDistrict">
     <!-- Welcome Message -->
     <div class="dashboard__header">
       <h1>Welcome to Gilgit Tour Guide</h1>
-      <p>Explore the beauty  of Gilgit-Baltistan with us..!</p>
+      <p>Explore the beauty of Gilgit-Baltistan with us..!</p>
     </div>
 
     <!-- Card Grid -->
@@ -24,7 +24,7 @@
     <div class="districts__section">
       <h2 class="section__title">Explore Districts</h2>
       <div class="districts__marquee">
-        <div class="marquee__track">
+        <div class="marquee__track" ref="marquee">
           <div
             v-for="(district, index) in [...districts, ...districts]"
             :key="index"
@@ -35,20 +35,23 @@
             <img :src="district.image" :alt="district.name" />
             <div class="overlay">
               <h3>{{ district.name }}</h3>
-              <Button label="Explore" severity="help" />
+              <Button label="Explore" severity="help" @click.stop="openDistrict(district.name)" />
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div>
-    ksjdnsdjn
-  </div>
+
+  <!-- Selected District Component -->
+  <Ghizer
+    v-if="selectedDistrict === 'Ghizer'"
+    @back="selectedDistrict = null"
+  />
 </template>
 
-<script setup lang="ts">
-import { ref,  } from 'vue'
+<script setup>
+import { ref } from 'vue'
 import HunzaImg from '../../assets/Hunza.jpg'
 import GhizerImg from '../../assets/Ghizer.jpg'
 import SkarduIMG from '../../assets/skrdu.webp'
@@ -60,15 +63,9 @@ import DiamarImg from '../../assets/Diamar.jpg'
 import GilgitImg from '../../assets/Gilgit.jpg'
 import GhancheImg from '../../assets/Ghanche.jpg'
 import Button from 'primevue/button'
+import Ghizer from '../Disticts/Ghizer.vue'
 
-interface Card {
-  title: string
-  value: string
-  subtitle: string
-  change: number
-}
-
-const cards: Card[] = [
+const cards = [
   { title: 'Total Tourists', value: '18,450', subtitle: 'This Year', change: 45 },
   { title: 'Picnic Points', value: '15', subtitle: 'Active Now', change: 0 },
   { title: 'Bookings', value: '1,200', subtitle: 'This Month', change: -8 },
@@ -88,7 +85,12 @@ const districts = [
   { name: 'Diamer', image: DiamarImg },
 ]
 
-const marquee = ref<HTMLElement | null>(null)
+const marquee = ref(null)
+const selectedDistrict = ref(null)
+
+const openDistrict = (districtName) => {
+  selectedDistrict.value = districtName
+}
 
 const pauseMarquee = () => {
   if (marquee.value) marquee.value.style.animationPlayState = 'paused'
@@ -128,6 +130,8 @@ const startMarquee = () => {
 .dashboard__cards {
   display: flex;
   gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .dashboard__card {
@@ -136,7 +140,7 @@ const startMarquee = () => {
   padding: 20px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
   transition: box-shadow 0.3s ease;
-  width: 300px;
+  width: 250px;
 }
 
 .dashboard__card:hover {
@@ -191,7 +195,7 @@ const startMarquee = () => {
 
 .section__title {
   font-size: 22px;
-text-align: center;
+  text-align: center;
   background: linear-gradient(90deg, #1e3c72, #2a5298);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
