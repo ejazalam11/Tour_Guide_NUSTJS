@@ -43,7 +43,7 @@ import Sidebar from './Sidebar.vue'
 
 .content-area {
   flex: 1;
-  padding: 20px;
+  padding: 21px;
   overflow-y: auto;
   background: #f5f6fa;
 }
