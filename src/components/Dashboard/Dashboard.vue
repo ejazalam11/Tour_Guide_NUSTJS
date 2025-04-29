@@ -42,7 +42,12 @@
       </div>
     </div>
   </div>
+   <div>
+    <h2 class="section__title">Unique Products of every District</h2>
+    <div>
 
+    </div>
+   </div>
   <!-- Selected District Component -->
   <Ghizer
     v-if="selectedDistrict === 'Ghizer'"
