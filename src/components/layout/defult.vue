@@ -29,7 +29,7 @@
   }
   
   .topbar {
-    height: 60px;
+    height: 50px;
     background: #fff;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
     z-index: 10;
