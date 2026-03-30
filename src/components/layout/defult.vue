@@ -43,7 +43,7 @@
   
   .content-area {
     flex: 1;
-    padding: 24px;
+    padding: 26px;
     overflow-y: auto;
     background: #f5f6fa;
   }
